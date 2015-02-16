@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <link rel=stylesheet href='style.css'/>
+    </head>
+    <body>
+        <nav><ul><li id='show_reddit'><a href="#">Reddit</a></li><li id='show_github'><a href="#">Github</a></li></ul></nav>
+        <div><p>Github: <a href="#">Log in</a> - Reddit: <a href="#">Log in</a></p></div>
+        <div id='all'>
+            <section id='reddit'>
+                <p><input id='subname' type='text'/><br/><input id='subbtn' type='button' value='Fetch posts' onclick="changeSubreddit();"/></p>
+                <div id='posts'></div>
+            </section>
+            <section id='github'></section>
+        </div>
+        <!-- <script src='helper.js'></script> -->
+        <!-- <script src='github.js'></script> -->
+        <!-- <script src='subreddit.js' ></script> -->
+        <!-- <script src='main.js'></script> -->
+        <script src='/socket.io/socket.io.js'></script>
+        <script>
+            var div = document.getElementById('posts');
+            document.getElementById('github').style.display = 'none';
+            var socket = io();
+            socket.on('reddit',function(result){
+                processJSON(JSON.parse(result));
+            });
+            socket.on('github',function(result){
+                processFeed(JSON.parse(result));
+            });
+            socket.on('github_user',function(username){
+                
+            });
+            function processJSON(json)
+            {
+                div.innerHTML = "";
+                json.data.children.forEach(function(child){
+                    div.innerHTML += '<p><a href="'+child.data.url+'"><img src="'+ child.data.thumbnail +'"/>'+child.data.title+'<'+'/a><br/><a href="http://reddit.com'+child.data.permalink+'">Comments ('+child.data.num_comments+')<'+'/a> - <span>'+child.data.domain+'<'+'/span><'+'/p>';
+                });
+            }
+            function changeSubreddit()
+            {
+                socket.emit('chsub',document.getElementById('subname').value);
+                document.getElementById('subname').value = "";
+            }
+            document.getElementById('show_reddit').onclick = function(){
+                changeTab('reddit');
+            }
+            document.getElementById('show_github').onclick = function(){
+                changeTab('github');
+            }
+            function fade(element) {
+                var op = 1;  // initial opacity
+                var timer = setInterval(function () {
+                    if (op <= 0){
+                        clearInterval(timer);
+                        element.style.display = 'none';
+                        element.style.opacity = 1;
+                    }
+                    element.style.opacity = op;
+                    element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+                    op -= 0.10;
+                }, 50);
+            }
+            function processFeed(items)
+            {
+                document.getElementById('github').innerHTML = "";
+                items.forEach(function(item){
+                    document.getElementById('github').innerHTML += '<a href="'+item.link+'">'+item.title+'<'+'/a><br/>';
+                });
+            }
+            function changeTab(id)
+            {
+                if(document.getElementById(id).style.display == 'none') 
+                {
+                    var elements = document.getElementsByTagName('section');
+                    for(var i = 0; i < elements.length; ++i)
+                    {
+                        elements[i].style.display = 'none';
+                    }
+                    document.getElementById(id).style.display = 'block';
+                }
+            }
+        </script>
+    </body>
+</html>

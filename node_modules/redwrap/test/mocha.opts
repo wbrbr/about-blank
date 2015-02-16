@@ -1,0 +1,5 @@
+--require chai
+--require sinon
+--reporter spec
+--ui bdd
+--timeout 5000
