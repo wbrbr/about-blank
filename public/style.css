@@ -44,3 +44,7 @@
     transition-duration: 1s;
     color: red;
 }
+
+#inputs .input-group .btn .fa{
+    width: 1em;
+}
