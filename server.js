@@ -4,7 +4,6 @@ var express = require('express'),
     path = require('path'),
     server = require('http').Server(app),
     io = require('socket.io')(server),
-    serveStatic = require('serve-static'),
     exec = require('child_process').exec,
     config = require('./config.json');
 
