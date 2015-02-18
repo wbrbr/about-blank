@@ -1,0 +1,46 @@
+#inputs {
+    margin-top: 20%;
+}
+
+#inputs div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#icons ul {
+    text-align: center;
+}
+#icons ul li {
+    display: inline;
+}
+
+#icons span {
+    /* margin-top: 15px; */
+    /* margin-left: 15px;  */
+    /* margin-right: 15px; */
+    margin: 20px;
+}
+
+#web:hover {
+    transition-property: color;
+    transition-duration: 1s;
+    color: purple;
+}
+
+#game:hover {
+    transition-property: color;
+    transition-duration: 1s;
+    color: blue;
+}
+
+#terminal:hover {
+    transition-property: color;
+    transition-duration: 1s;
+    color: orange;
+}
+
+#file:hover {
+    transition-property: color;
+    transition-duration: 1s;
+    color: red;
+}

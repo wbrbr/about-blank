@@ -1,0 +1,8 @@
+{
+    "port":3527,
+    "web":"dwb",
+    "file":"pcmanfm",
+    "game":"steam",
+    "terminal":"urxvt",
+    "city": "Toulouse"
+}

@@ -1,49 +1,93 @@
-var http = require('http'),
-    fs = require('fs'),
-    feed = require('feed-read'),
-    reddit = require('./reddit.js'),
-    github = require('./github.js'),
-    currentSub = 'all';
+var express = require('express'),
+    app = express(),
+    http = require('http'),
+    path = require('path'),
+    server = require('http').Server(app),
+    io = require('socket.io')(server),
+    serveStatic = require('serve-static'),
+    exec = require('child_process').exec,
+    config = require('./config.json');
 
-var server = http.createServer(function(req,res){
-    res.writeHead(200,{'Access-Control-Allow-Origin':'*/*'});
-    req.setEncoding('utf8');
-    fs.createReadStream('./index.html').pipe(res);
-});
-server.listen(3527);
-var io = require('socket.io')(server);
+server.listen(config.port,'localhost');
+app.use(express.static(path.join(__dirname,'public')));
 
 io.on('connection',function(socket){
-    // sub();
-    reddit_home();
-    getGithub();
-    socket.on('chsub',function(subname){
-        sub(subname);
+    currentSong();
+    diskSpace();
+    countUpdates();
+    freeRam();
+    getWeather();
+    socket.on('command',function(command){
+        exec(command);
     });
+    socket.on('web',function(){
+        exec(config.web);
+    });
+    socket.on('game',function(){
+        exec(config.game);
+    });
+    socket.on('terminal',function(){
+        exec(config.terminal);
+    });
+    socket.on('file',function(){
+        exec(config.file);
+    });
+    
 });
 
-function sub(subname) {
-    if(subname === undefined) subname = currentSub;
-    reddit.subreddit(subname,function(str){
-        io.emit('reddit',str);
-    });
-    currentSub = subname;
-}
-
-function reddit_home() {
-    reddit.home(function(str){
-        io.emit('reddit',str);
+function currentSong() {
+    exec('mpc current',function(err,stdout,stderr) {
+        if(err) throw err;
+        if(stdout) {
+            io.emit('song',stdout.toString('utf8'));
+        }
     });
 }
 
-function getGithub()
-{
-    github(process.argv[2],process.argv[3],function(result){
-        feed.atom(result,function(err,items){
-            if(err) throw err;
-            io.emit('github',JSON.stringify(items));
+function diskSpace() {
+    exec("echo \"$(df -h /home | sed '1d' | awk '{print $3}')/$(df -h /home | sed '1d' | awk '{print $2}')\"",function(err,stdout,stderr){
+        if(err) throw err;
+        if(stdout) {
+            io.emit('disk',stdout.toString('utf8'));
+        }
+    });
+}
+
+function freeRam() {
+    exec("echo \"$(free -h | head -n 2 | tail -n 1 | awk '{print $4}')/$(free -h | head -n 2 | tail -n 1 | awk '{print $2}')\"",function(err,stdout,stderr){
+        if(err) throw err;
+        if(stdout) {
+            io.emit('ram',stdout.toString('utf8'));
+        }
+    });
+}
+
+function countUpdates() {
+    exec("checkupdates | wc -l",function(err,stdout,stderr){
+        if(err) throw err;
+        if(stdout) {
+            io.emit('update',stdout.toString('utf9'));
+        }
+    });
+}
+
+function getWeather() {
+    http.get("http://api.openweathermap.org/data/2.5/weather?q="+config.city,function(res){
+        var str = '';
+        res.on('data',function(chunk){
+            str += chunk;
+        });
+        res.on('end',function(){
+            io.emit('weather',str);
+        });
+        res.on('error',function(err){
+            throw err;
         });
     });
 }
-// setInterval(getGithub,5000);
-// setInterval(sub,5000);
+
+setInterval(currentSong,1000);
+setInterval(diskSpace,5000);
+setInterval(countUpdates,30000);
+setInterval(freeRam,1000);
+setInterval(getWeather,30000);

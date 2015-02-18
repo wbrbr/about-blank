@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <link rel="stylesheet" href="style.css"/>
+        <link rel="stylesheet" href="bootstrap.min.css"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+        <title>about:blank</title>
+    </head>
+    <body>
+        <nav></nav>
+        <div class='container'>
+            <!--<div id="icons">
+                <ul>
+                    <li><span class="fa fa-globe fa-3x" id="web"></span></li>
+                    <li><span class="fa fa-terminal fa-3x" id="terminal"></span></li>
+                    <li><span class="fa fa-file-o fa-3x" id="file"></span></li>
+                    <li><span class="fa fa-gamepad fa-3x" id="game"></span></li>
+                </ul>
+            </div>-->
+            <div class='form-group' id='inputs'>
+                <div class='input-group'>
+                    <span class='input-group-btn'>
+                        <button class='btn btn-default' type='button'><span class='fa fa-terminal'></span></button>
+                    </span>
+                    <input type='text' id='command' placeholder='Enter command...' class="form-control"/>
+                    <span class='input-group-btn'>
+                        <button class='btn btn-default' type='button' id='cmd_btn'>Go !</button>
+                    </span>
+                </div>
+                <div class='input-group'>
+                    <span class='input-group-btn'>
+                        <button class='btn btn-default' type='button'><span class='fa fa-google'></span></button>
+                    </span>
+                    <input type='text' id='google' placeholder='Google...' class='form-control'/>
+                    <span class='input-group-btn'>
+                        <button class='btn btn-default' type='button' id='google_btn'>Go !</button>
+                    </span>
+                </div>
+                <div class='input-group'>
+                    <span class='input-group-btn'>
+                        <button class='btn btn-default' type='button'><span class='fa fa-github'></span></button>
+                    </span>
+                    <input type='text' placeholder='Github...' class='form-control' id='github' />
+                    <span class='input-group-btn'>
+                        <button class='btn btn-default' type='button' id='github_btn'>Go !</button>
+                    </span>
+                </div>
+            </div>
+            <p id="song"></p>
+            <p id="disk"></p>
+            <p id="update"></p>
+            <p id="ram"></p>
+            <p id="weather"></p>
+        </div>
+        <script src='/socket.io/socket.io.js'></script>
+        <script src='client.js'></script>
+    </body>
+</html>
