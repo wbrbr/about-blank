@@ -1,4 +1,6 @@
 {
     "port":3527,
-    "city": "Toulouse"
+    "city": "Toulouse",
+    "searchengine": "google",
+    "partition": "/home"
 }

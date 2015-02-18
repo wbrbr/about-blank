@@ -2,8 +2,9 @@ var socket = io();
 socket.on('song',function(result){
     document.getElementById('song').innerHTML = "<span class='fa fa-music'> -  " + result + "</span>";
 });
-socket.on('disk',function(space){
-    document.getElementById('disk').innerHTML = "<span class='fa fa-hdd-o'> - /home: " + space + "</span>";
+socket.on('disk',function(str){
+    result = JSON.parse(str);
+    document.getElementById('disk').innerHTML = "<span class='fa fa-hdd-o'> - " + result.name + ": " + result.description + "</span>";
 });
 socket.on('update',function(count){
     document.getElementById('update').innerHTML = "<span class='fa fa-linux'> - Updates: " + count + "</span>";
@@ -15,35 +16,35 @@ socket.on('weather',function(weather){
     document.getElementById('weather').innerHTML = "<span class='fa fa-sun-o'> - " + JSON.parse(weather).weather[0].description + "</span>";
 });
 
-document.getElementById('command').addEventListener('keypress',function(e){
-    if(e.charCode == 13) { // Enter key
-        socket.emit('command',document.getElementById('command').value);
-        document.getElementById('command').value = '';
+$('#command').keypress(function(e){
+    if(e.key == "Enter" || e.charCode == 13) { // Enter key
+        socket.emit('command',$('#command').val());
+        $('#command').val('');
     }
 });
-document.getElementById('cmd_btn').onclick = function() {
-    socket.emit('command',document.getElementById('command').value);
-    document.getElementById('command').value = '';
-};
-document.getElementById('google').addEventListener('keypress',function(e){
-    if(e.charCode == 13) {
-        window.location.href = 'http://google.com/search?q=' + document.getElementById('google').value;
-        document.getElementById('google').value = '';
+$('cmd_btn').click(function(e) {
+    socket.emit('command',$('#command').val());
+    $('#command').val('');
+});
+$('#google').keypress(function(e){
+    if(e.key == "Enter" || e.charCode == 13) {
+        window.location.href = 'http://google.com/search?q=' + $('#google').val();
+        $('#google').val('');
     }
 });
-document.getElementById('google_btn').onclick = function() {
-    window.location.href = 'http://google.com/?q=' + document.getElementById('google').value;
-    document.getElementById('google').value = '';
-};
-document.getElementById('github').addEventListener('keypress',function(e){
-    if(e.charCode == 13) {
-        window.location.href = 'http://github.com/search?q=' + document.getElementById('github').value;
-        document.getElementById('github').value = '';
+$('#google_btn').click(function(e) {
+    window.location.href = 'http://google.com/?q=' + $('#google').val();
+    $('#google').val('');
+});
+$('#github').keypress(function(e){
+    if(e.key == "Enter" || e.charCode == 13) {
+        window.location.href = 'http://github.com/search?q=' + $('#github').val();
+        $('#github').val('');
     }
 });
 document.getElementById('github_btn').onclick = function() {
-    window.location.href = 'http://github.com/search?q=' + document.getElementById('github').value;
-    document.getElementById('github').value = '';
+    window.location.href = 'http://github.com/search?q=' + $('#github').val();
+    $('#github').val('');
 };
 
 document.getElementById('web').onclick = function() {

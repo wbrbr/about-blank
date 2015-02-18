@@ -44,10 +44,14 @@ function currentSong() {
 }
 
 function diskSpace() {
-    exec("echo \"$(df -h /home | sed '1d' | awk '{print $3}')/$(df -h /home | sed '1d' | awk '{print $2}')\"",function(err,stdout,stderr){
+    exec("echo \"$(df -h "+ config.partition + " | sed '1d' | awk '{print $3}')/$(df -h " + config.partition + " | sed '1d' | awk '{print $2}')\"",function(err,stdout,stderr){
         if(err) throw err;
         if(stdout) {
-            io.emit('disk',stdout.toString('utf8'));
+            var object = {
+                name: config.partition,
+                description: stdout.toString()
+            };
+            io.emit('disk',JSON.stringify(object));
         }
     });
 }
@@ -65,7 +69,7 @@ function countUpdates() {
     exec("checkupdates | wc -l",function(err,stdout,stderr){
         if(err) throw err;
         if(stdout) {
-            io.emit('update',stdout.toString('utf9'));
+            io.emit('update',stdout.toString('utf8'));
         }
     });
 }
@@ -78,9 +82,6 @@ function getWeather() {
         });
         res.on('end',function(){
             io.emit('weather',str);
-        });
-        res.on('error',function(err){
-            throw err;
         });
     });
 }
