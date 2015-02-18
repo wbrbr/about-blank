@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname,'public')));
 io.on('connection',function(socket){
     currentSong();
     diskSpace();
-    countUpdates();
+    // countUpdates();
     freeRam();
     getWeather();
     socket.on('command',function(command){
@@ -87,6 +87,6 @@ function getWeather() {
 
 setInterval(currentSong,1000);
 setInterval(diskSpace,5000);
-setInterval(countUpdates,30000);
+// setInterval(countUpdates,30000);
 setInterval(freeRam,1000);
 setInterval(getWeather,30000);
