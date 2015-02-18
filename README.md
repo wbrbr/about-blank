@@ -21,7 +21,7 @@ about:blank is a startpage for browsers.
 
 First, you need to install node.js .      
 When it is installed, clone this repository:     
-`git clone https://github.com/nounoursheureux/about:blank.git`
+`git clone https://github.com/nounoursheureux/about-blank.git`        
 Then install the npm dependencies: 
 `npm install`
 Start the server: 
