@@ -3,5 +3,6 @@
     "city": "Toulouse",
     "searchengine": "google",
     "partition": "/home",
-    "default": "google"
+    "active": "search",
+    "search": "google"
 }

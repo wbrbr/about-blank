@@ -1,13 +1,14 @@
 var socket = io();
-socket.on('default',function(id){
-    $('#'+id).addClass('active');
+var config;
+socket.on('config',function(conf){
+    config = conf;
+    $('#' + config.active).addClass('active');
 });
 socket.on('song',function(result){
     document.getElementById('song').innerHTML = "<span class='fa fa-music'> -  " + result + "</span>";
 });
-socket.on('disk',function(str){
-    result = JSON.parse(str);
-    document.getElementById('disk').innerHTML = "<span class='fa fa-hdd-o'> - " + result.name + ": " + result.description + "</span>";
+socket.on('disk',function(size){
+    document.getElementById('disk').innerHTML = "<span class='fa fa-hdd-o'> - " + config.partition + ": " + size + "</span>";
 });
 socket.on('update',function(count){
     document.getElementById('update').innerHTML = "<span class='fa fa-linux'> - Updates: " + count + "</span>";
@@ -32,13 +33,13 @@ function processInput()
 {
     if($('#terminal').hasClass('active'))
     {
-        alert('mdr');
         socket.emit('command',$('#command').val());
         $('#command').val('');
     }
-    else if($('#google').hasClass('active'))
+    else if($('#search').hasClass('active'))
     {
-        window.location.href = 'http://google.com/?q=' + $('#command').val();
+        if(config.search == "google") window.location.href = 'http://google.com/search?q=' + $('#command').val();
+        else if(config.search == "duckduckgo") window.location.href = 'http://duckduckgo.com/?q=' + $('#command').val();
         $('#command').val('');
     }
     else if($('#github').hasClass('active'))

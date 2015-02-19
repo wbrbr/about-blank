@@ -16,23 +16,10 @@ io.on('connection',function(socket){
     // countUpdates();
     freeRam();
     getWeather();
-    socket.emit('default',config.default);
+    socket.emit('config',config);
     socket.on('command',function(command){
         exec(command);
     });
-    socket.on('web',function(){
-        exec(config.web);
-    });
-    socket.on('game',function(){
-        exec(config.game);
-    });
-    socket.on('terminal',function(){
-        exec(config.terminal);
-    });
-    socket.on('file',function(){
-        exec(config.file);
-    });
-    
 });
 
 function currentSong() {
@@ -48,11 +35,7 @@ function diskSpace() {
     exec("echo \"$(df -h "+ config.partition + " | sed '1d' | awk '{print $3}')/$(df -h " + config.partition + " | sed '1d' | awk '{print $2}')\"",function(err,stdout,stderr){
         if(err) throw err;
         if(stdout) {
-            var object = {
-                name: config.partition,
-                description: stdout.toString()
-            };
-            io.emit('disk',JSON.stringify(object));
+            io.emit('disk',stdout.toString());
         }
     });
 }

@@ -34,7 +34,10 @@ The configuration file is `config.json`. It contains:
 - The city name: the weather API shows this city's weather
 - The port: the server runs on this port.    
 - The partition: the partition which is used in the status informations        
+- The default active icon: you can set it to
+  - `terminal`      
+  - or `search`         
+  - or `github`     
 - The default search engine: you can set it to     
-  - google      
-  - Or github     
-  - Or terminal    
+  -  `google`    
+  - or `duckduckgo` 
