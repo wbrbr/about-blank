@@ -16,6 +16,7 @@ io.on('connection',function(socket){
     // countUpdates();
     freeRam();
     getWeather();
+    socket.emit('default',config.default);
     socket.on('command',function(command){
         exec(command);
     });

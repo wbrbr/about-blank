@@ -20,30 +20,14 @@
             </div>-->
             <div class='form-group' id='inputs'>
                 <div class='input-group'>
-                    <span class='input-group-btn'>
-                        <button class='btn btn-default' type='button'><span class='fa fa-terminal'></span></button>
+                    <span class='input-group-btn' data-toggle="buttons">
+                        <label class='btn btn-default' id='terminal'><input type='radio'/><span class='fa fa-terminal'></span></label>
+                        <label class='btn btn-default' id='google'><input type='radio'/><span class='fa fa-google'></span></label>
+                        <label class='btn btn-default' id='github'><input type='radio'/><span class='fa fa-github'></span></label>
                     </span>
-                    <input type='text' id='command' placeholder='Enter command...' class="form-control"/>
+                    <input type='text' id='command' placeholder='Enter...' class="form-control" autofocus/>
                     <span class='input-group-btn'>
                         <button class='btn btn-default' type='button' id='cmd_btn'>Go !</button>
-                    </span>
-                </div>
-                <div class='input-group'>
-                    <span class='input-group-btn'>
-                        <button class='btn btn-default' type='button'><span class='fa fa-google'></span></button>
-                    </span>
-                    <input type='text' id='google' placeholder='Google...' class='form-control'/>
-                    <span class='input-group-btn'>
-                        <button class='btn btn-default' type='button' id='google_btn'>Go !</button>
-                    </span>
-                </div>
-                <div class='input-group'>
-                    <span class='input-group-btn'>
-                        <button class='btn btn-default' type='button'><span class='fa fa-github'></span></button>
-                    </span>
-                    <input type='text' placeholder='Github...' class='form-control' id='github' />
-                    <span class='input-group-btn'>
-                        <button class='btn btn-default' type='button' id='github_btn'>Go !</button>
                     </span>
                 </div>
             </div>
@@ -55,6 +39,7 @@
         </div>
         <script src='/socket.io/socket.io.js'></script>
         <script src='jquery.min.js'></script>
+        <script src='bootstrap.min.js'></script>
         <script src='client.js'></script>
     </body>
 </html>

@@ -32,4 +32,9 @@ Finally, start your web-browser and navigate to `localhost:3527`
 
 The configuration file is `config.json`. It contains:     
 - The city name: the weather API shows this city's weather
-- The port: the server runs on this port. 
+- The port: the server runs on this port.    
+- The partition: the partition which is used in the status informations        
+- The default search engine: you can set it to     
+  - google      
+  - Or github     
+  - Or terminal    

@@ -1,4 +1,7 @@
 var socket = io();
+socket.on('default',function(id){
+    $('#'+id).addClass('active');
+});
 socket.on('song',function(result){
     document.getElementById('song').innerHTML = "<span class='fa fa-music'> -  " + result + "</span>";
 });
@@ -18,47 +21,30 @@ socket.on('weather',function(weather){
 
 $('#command').keypress(function(e){
     if(e.key == "Enter" || e.charCode == 13) { // Enter key
-        socket.emit('command',$('#command').val());
-        $('#command').val('');
+        processInput();
     }
 });
 $('cmd_btn').click(function(e) {
-    socket.emit('command',$('#command').val());
-    $('#command').val('');
+    processInput();
 });
-$('#google').keypress(function(e){
-    if(e.key == "Enter" || e.charCode == 13) {
-        window.location.href = 'http://google.com/search?q=' + $('#google').val();
-        $('#google').val('');
+
+function processInput()
+{
+    if($('#terminal').hasClass('active'))
+    {
+        alert('mdr');
+        socket.emit('command',$('#command').val());
+        $('#command').val('');
     }
-});
-$('#google_btn').click(function(e) {
-    window.location.href = 'http://google.com/?q=' + $('#google').val();
-    $('#google').val('');
-});
-$('#github').keypress(function(e){
-    if(e.key == "Enter" || e.charCode == 13) {
-        window.location.href = 'http://github.com/search?q=' + $('#github').val();
-        $('#github').val('');
+    else if($('#google').hasClass('active'))
+    {
+        window.location.href = 'http://google.com/?q=' + $('#command').val();
+        $('#command').val('');
     }
-});
-document.getElementById('github_btn').onclick = function() {
-    window.location.href = 'http://github.com/search?q=' + $('#github').val();
-    $('#github').val('');
-};
+    else if($('#github').hasClass('active'))
+    {
+        window.location.href = 'http://github.com/search?q=' + $('#command').val();
+        $('#command').val('');
+    }
 
-document.getElementById('web').onclick = function() {
-    socket.emit('web');
-};
-
-document.getElementById('terminal').onclick = function() {
-    socket.emit('terminal');
-};
-
-document.getElementById('file').onclick = function() {
-    socket.emit('file');
-};
-
-document.getElementById('game').onclick = function() {
-    socket.emit('game');
-};
+}
