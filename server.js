@@ -11,7 +11,9 @@ server.listen(config.port,'localhost');
 app.use(express.static(path.join(__dirname,'public')));
 
 io.on('connection',function(socket){
-    currentSong();
+	if(config.mdp){
+    	currentSong();
+	}
     diskSpace();
     // countUpdates();
     freeRam();
@@ -69,8 +71,9 @@ function getWeather() {
         });
     });
 }
-
-setInterval(currentSong,1000);
+if(config.mpd){
+	setInterval(currentSong,1000);
+}
 setInterval(diskSpace,5000);
 // setInterval(countUpdates,30000);
 setInterval(freeRam,1000);

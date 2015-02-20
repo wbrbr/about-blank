@@ -4,5 +4,6 @@
     "searchengine": "google",
     "partition": "/home",
     "active": "search",
-    "search": "google"
+    "search": "google",
+	"mpd":false
 }
