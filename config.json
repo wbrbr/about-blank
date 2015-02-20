@@ -4,5 +4,27 @@
     "searchengine": "google",
     "partition": "/home",
     "active": "search",
-    "search": "google"
+    "search": "google",
+	"modules":[
+		{
+			"name":"ram",
+			"interval": 1000
+		},
+		{
+			"name":"song",
+			"interval":1000
+		},
+		{
+			"name":"disk",
+			"interval":5000
+		},
+		{
+			"name":"update",
+			"interval":30000
+		},
+		{
+			"name":"weather",
+			"interval": 30000
+		}
+	]
 }
