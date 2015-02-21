@@ -1,0 +1,19 @@
+body{
+	background-color: #ebebeb;
+}
+p {
+	color: #515151;
+}
+#inputs {
+    margin-top: 20%;
+}
+
+#inputs div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+#inputs .input-group .btn .fa{
+    width: 1em;
+}

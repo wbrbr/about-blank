@@ -3,6 +3,7 @@ var config;
 socket.on('config',function(conf){
     config = conf;
     $('#' + config.active).addClass('active');
+	document.getElementById('theme').href = conf.theme + ".css";
 });
 socket.on('song',function(result){
     document.getElementById('song').innerHTML = "<span class='fa fa-music'> -  " + result + "</span>";
