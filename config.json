@@ -5,7 +5,7 @@
     "partition": "/home",
     "active": "search",
     "search": "google",
-	"theme" : "dark",
+    "theme" : "dark",
     "modules":[
         {
             "name":"ram",
