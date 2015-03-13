@@ -14,10 +14,19 @@ app.use(express.static(path.join(__dirname,'public')));
 //Global declarations for easy configuration
 
 global.song = function(){
-    osascript.execute('tell application "iTunes" to name of current track as string',function(err,stdout,stderr) {
-        if(err) throw err;
+    var cmd = 'on is_running("iTunes") ' +
+                'tell application "iTunes" to ' +
+                '{ artist of current track as string, ' +
+                'name of current track as string }' +
+                'end is_running';
+
+    osascript.execute(cmd, function(err,stdout,stderr) {
+        if(err) {
+            // io.emit('song', '');
+            // console.log("iTunes not running");
+        }
         if(stdout) {
-            io.emit('song',stdout.toString('utf8'));
+            io.emit('song',stdout.join(' - ').toString('utf8'));
         }
     });
 };
