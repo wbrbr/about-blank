@@ -11,23 +11,45 @@ var express = require('express'),
 server.listen(config.port,'localhost');
 app.use(express.static(path.join(__dirname,'public')));
 
-//Global declarations for easy configuration
+// start with true to prevent from getting info when we haven't checked if iTunes is running
+var paused = true;
 
-global.song = function(){
-    var cmd = 'on is_running("iTunes") ' +
-                'tell application "iTunes" to ' +
-                '{ artist of current track as string, ' +
-                'name of current track as string }' +
-                'end is_running';
+// prevent from loading in each call to iTunesInfo
+var infoCmd = 'tell application "iTunes" to ' +
+            '{ artist of current track as string, ' +
+            'name of current track as string }';
 
-    osascript.execute(cmd, function(err,stdout,stderr) {
+
+
+var iTunesInfo = function() {
+    // iTunes throws an error if it's paused and we try to obtain the current song
+    osascript.execute('tell app "iTunes" to get player state as string', function(err, stdout, stderr) {
+        var state = stdout.toString('utf8');
+        paused = state === 'paused' || state === 'stopped';
+    });
+
+    if(paused) {
+       return;
+    }
+
+    osascript.execute(infoCmd, function(err,stdout,stderr) {
         if(err) {
-            // io.emit('song', '');
-            // console.log("iTunes not running");
+            throw err;
+            // console.log(err);
+            // console.log(stdout);
         }
         if(stdout) {
             io.emit('song',stdout.join(' - ').toString('utf8'));
         }
+    });
+};
+
+//Global declarations for easy configuration
+
+global.song = function(){
+    osascript.execute('tell app "System Events" to count processes whose name is "iTunes"', function(err, stdout, stderr) {
+        if(stdout)
+            iTunesInfo();
     });
 };
 
@@ -39,7 +61,7 @@ global.disk = function(){
                 name: config.partition,
                 description: stdout.toString()
             };
-            io.emit('disk',JSON.stringify(object));
+            io.emit('disk', stdout.toString());
         }
     });
 };
