@@ -35,8 +35,6 @@ var iTunesInfo = function() {
     osascript.execute(infoCmd, function(err,stdout,stderr) {
         if(err) {
             throw err;
-            // console.log(err);
-            // console.log(stdout);
         }
         if(stdout) {
             io.emit('song',stdout.join(' - ').toString('utf8'));

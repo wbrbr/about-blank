@@ -34,7 +34,6 @@ function processInput()
 {
     if($('#terminal').hasClass('active'))
     {
-        console.log($('#command').val().replace);
         var cmd = "open -a " + $('#command').val().replace(/ /g, '\\ ');
         socket.emit('command',cmd);
         $('#command').val('');
