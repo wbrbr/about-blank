@@ -34,8 +34,7 @@ function processInput()
 {
     if($('#terminal').hasClass('active'))
     {
-        var cmd = "open -a " + $('#command').val().replace(/ /g, '\\ ');
-        socket.emit('command',cmd);
+        socket.emit('command',$('#command').val());
         $('#command').val('');
     }
     else if($('#search').hasClass('active'))
