@@ -34,7 +34,9 @@ function processInput()
 {
     if($('#terminal').hasClass('active'))
     {
-        var cmd = "open -a " + $('#command').val().replace(/ /g, '\\ ');
+        var cmd;
+        if(navigator.platform.indexOf('Mac') > -1) cmd = "open -a " + $('#command').val().replace(/ /g, '\\ ');
+        else cmd = $("#command").val();
         socket.emit('command',cmd);
         $('#command').val('');
     }
