@@ -56,3 +56,5 @@ The configuration file is `config.json`. It contains:
 - The default search engine: you can set it to     
   -  `google`    
   - or `duckduckgo` 
+- The theme: the name of the stylesheet used in the page. The themes *light* and *dark* are included.
+- The modules: you can disable a module or change the delay between reloading (in milliseconds).
