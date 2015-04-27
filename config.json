@@ -1,8 +1,8 @@
 {
     "port":3527,
-    "city": "Toulouse",
+    "city": "Malmo",
     "searchengine": "google",
-    "partition": "/home",
+    "partition": "/dev/sda1",
     "active": "search",
     "search": "google",
     "theme" : "dark",
