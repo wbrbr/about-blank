@@ -22,7 +22,7 @@ global.song = function(){
 };
 
 global.disk = function(){
-    exec("echo \"$(df -h "+ config.partition + " | sed '1d' | awk '{print $3}')/$(df -h " + config.partition + " | sed '1d' | awk '{print $2}')\"",function(err,stdout,stderr){
+      exec("echo \"$(df "+ config.partition +" --output=used -h |sed '1d')/$(df "+ config.partition +" --output=avail -h |sed '1d')\"",function(err,stdout,stderr){
         if(err) throw err;
         if(stdout) {
             io.emit('disk',stdout.toString());
@@ -31,7 +31,7 @@ global.disk = function(){
 };
 
 global.ram = function(){
-    exec("echo \"$(free -h | head -n 2 | tail -n 1 | awk '{print $4}')/$(free -h | head -n 2 | tail -n 1 | awk '{print $2}')\"",function(err,stdout,stderr){
+    exec("echo \"$(free -h | awk '/Mem:/ {print $4}')/$(free -h | awk '/Mem:/ {print $2}')\"",function(err,stdout,stderr){
         if(err) throw err;
         if(stdout) {
             io.emit('ram',stdout.toString('utf8'));
