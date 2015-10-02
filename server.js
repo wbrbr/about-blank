@@ -53,10 +53,10 @@ global.weather = function(){
 };
 
 global.uname = function(){
-    exec('uname -a',function(err,stdout,stderr) {
+    exec('uname -r',function(err,stdout,stderr) {
         if(err) throw err;
         if(stdout) {
-            io.emit('uname',stdout.toString('utf8').split('#')[0].split(' ')[2]);
+            io.emit('uname',stdout.toString('utf8'));
         }
     });
 };
