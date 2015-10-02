@@ -10,6 +10,8 @@ var express = require('express'),
 server.listen(config.port,'localhost');
 app.use(express.static(path.join(__dirname,'public')));
 
+console.log('Listening on port ' + config.port);
+
 //Global declarations for easy configuration
 
 global.song = function(){
