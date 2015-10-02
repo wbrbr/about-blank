@@ -17,6 +17,9 @@ socket.on('update',function(count){
 socket.on('ram',function(ram){
     document.getElementById('ram').innerHTML = "<span class='fa fa-line-chart'> - Ram: " + ram + "</span>";
 });
+socket.on('uname',function(kernel){
+    document.getElementById('uname').innerHTML = "<span class='fa fa-linux'> - Kernel: " + kernel + "</span>";
+});
 socket.on('weather',function(weather){
     document.getElementById('weather').innerHTML = "<span class='fa fa-sun-o'> - " + JSON.parse(weather).weather[0].description + "</span>";
 });

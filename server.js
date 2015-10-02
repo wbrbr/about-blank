@@ -52,6 +52,14 @@ global.weather = function(){
     });
 };
 
+global.uname = function(){
+    exec('uname -r',function(err,stdout,stderr) {
+        if(err) throw err;
+        if(stdout) {
+            io.emit('uname',stdout.toString('utf8'));
+        }
+    });
+};
 //Initialize the modules
 
 io.on('connection',function(socket){

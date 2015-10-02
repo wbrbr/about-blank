@@ -22,6 +22,10 @@
         {
             "name":"weather",
             "interval": 30000
-        }
+        },
+		{
+			"name":"uname",
+			"interval": 100000
+		}
     ]
 }
