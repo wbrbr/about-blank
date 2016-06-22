@@ -33,7 +33,7 @@ global.song = function(){
 };
 
 global.disk = function(){
-    exec("echo \"$(df "+ config.partition +" --output=used -h |sed '1d')/$(df "+ config.partition +" --output=size -h |sed '1d')\" available",function(err,stdout,stderr){
+    exec("echo \"$(df "+ config.partition +" --output=used -h |sed '1d')/$(df "+ config.partition +" --output=size -h |sed '1d')\" used",function(err,stdout,stderr){
         if(err) {
             handleError('disk', err);
         } else if(stdout) {
